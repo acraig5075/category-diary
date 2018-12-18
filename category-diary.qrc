@@ -4,5 +4,8 @@
         <file>Content.qml</file>
         <file>SettingsIcon.qml</file>
         <file>images/eventindicator.png</file>
+        <file>Categories.qml</file>
+        <file>Diary.qml</file>
+        <file>Summary.qml</file>
     </qresource>
 </RCC>

@@ -19,7 +19,13 @@ OTHER_FILES += \
 
 DISTFILES += \
     Content.qml \
-    SettingsIcon.qml
+    SettingsIcon.qml \
+    Categories.qml \
+    Diary.qml \
+    Summary.qml \
+    Categories.qml \
+    Diary.qml \
+    Summary.qml
 
 target.path = $$[QT_INSTALL_EXAMPLES]/quickcontrols/extras/category-diary
 INSTALLS += target
