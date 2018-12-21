@@ -27,6 +27,12 @@ public slots:
     bool renameCategory(int id, const QString &name);
 
     bool addEvent(const QDateTime &date, int categoryId);
+
+    Q_INVOKABLE QList<QObject*> eventsForDate(const QDate &date);
+    Q_INVOKABLE QList<QObject*> summaryForDateRange(const QDate &fromDate, const QDate &toDate);
+    // TODO: https://wiki.qt.io/How_to_Use_a_Custom_Class_in_C%2B%2B_Model_and_QML_View
+signals:
+    void databaseChanged();
 };
 
 #endif

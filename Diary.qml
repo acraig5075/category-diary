@@ -13,6 +13,15 @@ Component {
             spacing: 10
             layoutDirection: Qt.RightToLeft
 
+            Connections {
+                target: database
+                onDatabaseChanged: {
+                    calendar.update()
+                    eventsListView.update()
+                    console.info("Database changed")
+                }
+            }
+
             Calendar {
                 id: calendar
                 width: (parent.width > parent.height ? parent.width * 0.5 - parent.spacing : parent.width)
@@ -39,7 +48,7 @@ Component {
 
                         Image {
                             id: dayDelegateImage
-                            visible: styleData.visibleMonth && eventModel.eventsForDate(styleData.date).length > 0
+                            visible: styleData.visibleMonth && database.eventsForDate(styleData.date).length > 0
                             anchors.top: parent.top
                             anchors.left: parent.left
                             anchors.margins: -1
@@ -68,42 +77,42 @@ Component {
                 }
             }
 
-            Component {
-                id: eventListHeader
-
-                Row {
-                    id: eventDateRow
-                    width: parent.width
-                    height: eventDayLabel.height
-                    spacing: 10
-
-                    Label {
-                        id: eventDayLabel
-                        text: calendar.selectedDate.getDate()
-                        font.pointSize: 35
-                    }
-
-                    Column {
-                        height: eventDayLabel.height
-
-                        Label {
-                            readonly property var options: { weekday: "long" }
-                            text: Qt.locale().standaloneDayName(calendar.selectedDate.getDay(), Locale.LongFormat)
-                            font.pointSize: 18
-                        }
-                        Label {
-                            text: Qt.locale().standaloneMonthName(calendar.selectedDate.getMonth())
-                                  + calendar.selectedDate.toLocaleDateString(Qt.locale(), " yyyy")
-                            font.pointSize: 12
-                        }
-                    }
-                }
-            }
-
             Rectangle {
                 width: (parent.width > parent.height ? parent.width * 0.5 - parent.spacing : parent.width)
                 height: (parent.height > parent.width ? parent.height * 0.5 - parent.spacing : parent.height)
                 border.color: Qt.darker(color, 1.2)
+
+                Component {
+                    id: eventListHeader
+
+                    Row {
+                        id: eventDateRow
+                        width: parent.width
+                        height: eventDayLabel.height
+                        spacing: 10
+
+                        Label {
+                            id: eventDayLabel
+                            text: calendar.selectedDate.getDate()
+                            font.pointSize: 35
+                        }
+
+                        Column {
+                            height: eventDayLabel.height
+
+                            Label {
+                                readonly property var options: { weekday: "long" }
+                                text: Qt.locale().standaloneDayName(calendar.selectedDate.getDay(), Locale.LongFormat)
+                                font.pointSize: 18
+                            }
+                            Label {
+                                text: Qt.locale().standaloneMonthName(calendar.selectedDate.getMonth())
+                                      + calendar.selectedDate.toLocaleDateString(Qt.locale(), " yyyy")
+                                font.pointSize: 12
+                            }
+                        }
+                    }
+                }
 
                 ListView {
                     id: eventsListView
@@ -112,7 +121,7 @@ Component {
                     header: eventListHeader
                     anchors.fill: parent
                     anchors.margins: 10
-                    model: eventModel.eventsForDate(calendar.selectedDate)
+                    model: database.eventsForDate(calendar.selectedDate)
 
                     delegate: Rectangle {
                         width: eventsListView.width
@@ -158,6 +167,7 @@ Component {
                         }
                     }
                 }
+
                 Button
                 {
                     id:addEventButton
@@ -185,10 +195,6 @@ Component {
                             console.log(qsTr("row: %1, id: %2").arg(categoryCombo.currentIndex).arg(categoryId))
                             var selectedDate = calendar.selectedDate
                             if (database.addEvent(selectedDate, categoryId)) {
-                                // redraw calendar
-
-                                // redraw eventsListView
-                                eventsListView.model = eventModel.eventsForDate(calendar.selectedDate)
                             }
                         }
 

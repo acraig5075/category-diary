@@ -5,9 +5,7 @@
 #include <QDebug>
 
 #include "database.h"
-#include "sqleventmodel.h"
 #include "categoryquerymodel.h"
-#include "sqlstatsmodel.h"
 
 
 int main(int argc, char *argv[])
@@ -27,14 +25,14 @@ int main(int argc, char *argv[])
         qDebug() << "Cannot open or create database";
 
     CategoryQueryModel categoryModel;
-    SqlEventModel eventModel;
-    SqlStatsModel statsModel;
+    //SqlEventModel eventModel;
+    //SqlStatsModel statsModel;
 
     QQmlApplicationEngine engine;
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("categoryModel", QVariant::fromValue(&categoryModel));
-    context->setContextProperty("eventModel", QVariant::fromValue(&eventModel));
-    context->setContextProperty("statsModel", QVariant::fromValue(&statsModel));
+    //context->setContextProperty("eventModel", QVariant::fromValue(&eventModel));
+    //context->setContextProperty("statsModel", QVariant::fromValue(&statsModel));
     context->setContextProperty("database", QVariant::fromValue(&database));
     engine.load(QUrl("qrc:/main.qml"));
     if (engine.rootObjects().isEmpty())

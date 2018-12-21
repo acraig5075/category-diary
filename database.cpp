@@ -5,6 +5,8 @@
 #include <QStandardPaths>
 #include <QDate>
 #include "database.h"
+#include "event.h"
+#include "stats.h"
 
 Database::Database(QObject *parent)
     : QObject(parent)
@@ -160,5 +162,98 @@ bool Database::addEvent(const QDateTime &date, int categoryId)
         return false;
     }
 
+    emit databaseChanged();
+
     return true;
+}
+
+QList<QObject*> Database::eventsForDate(const QDate &date)
+{
+    const QString queryStr = QString::fromLatin1(
+                "SELECT Events.myDate AS myDate, Events.percentage AS percent, Categories.description AS name "
+                "FROM Events "
+                "INNER JOIN Categories ON Events.categoryId = Categories.id "
+                "WHERE '%1' >= myDate AND '%1' <= myDate").arg(date.toString("yyyy-MM-dd"));
+
+    QSqlQuery query(queryStr);
+    if (!query.exec())
+        qFatal("Query failed");
+
+    QList<QObject*> events;
+    while (query.next()) {
+        Event *event = new Event(this);
+
+        QDateTime date;
+        date.setDate(query.value("myDate").toDate());
+        event->setDate(date);
+        event->setPercent(query.value("percent").toInt());
+        event->setName(query.value("name").toString());
+
+        events.append(event);
+    }
+
+    return events;
+}
+
+QList<QObject*> Database::summaryForDateRange(const QDate &fromDate, const QDate &toDate)
+{
+    QString fromDateStr = fromDate.toString("yyyy-MM-dd");
+    QString toDateStr = toDate.toString("yyyy-MM-dd");
+
+    QSqlQuery query;
+    query.prepare("SELECT SUM(percentage) "
+                  "FROM Events "
+                  "WHERE :FromDate <= myDate "
+                  "AND :ToDate >= myDate");
+    query.bindValue(":FromDate", fromDateStr);
+    query.bindValue(":ToDate", toDateStr);
+
+    if (!query.exec() || !query.next())
+    {
+        qDebug() << "statsForDateRange::Fail (1)" << query.lastError();
+        return {};
+    }
+
+    bool ok;
+    int total = query.value(0).toInt(&ok);
+    if (!ok)
+    {
+        qDebug() << "statsForDateRange::Fail (2)" << query.lastError();
+        return {};
+    }
+
+    if (total == 0)
+    {
+        qDebug() << "0 rows returned";
+        return {};
+    }
+
+    query.prepare("SELECT Categories.description AS desc, SUM(Events.percentage) * 100.0 / :Total AS percent "
+                  "FROM Events "
+                  "INNER JOIN Categories "
+                  "ON Events.categoryId = Categories.id "
+                  "WHERE :FromDate <= myDate "
+                  "AND :ToDate >= myDate "
+                  "GROUP BY categoryId "
+                  "ORDER BY percent DESC ");
+    query.bindValue(":Total", total);
+    query.bindValue(":FromDate", fromDateStr);
+    query.bindValue(":ToDate", toDateStr);
+
+    if (!query.exec())
+    {
+        qDebug() << "statsForDateRange::Fail (3)" << query.lastError();
+        return {};
+    }
+
+     QList<QObject*> stats;
+     while (query.next())
+     {
+         Stats *stat = new Stats(this);
+         stat->setDescription(query.value("desc").toString());
+         stat->setPercent(query.value("percent").toDouble());
+         stats.append(stat);
+     }
+
+    return stats;
 }

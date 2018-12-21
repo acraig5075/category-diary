@@ -5,10 +5,8 @@ QT += quick sql
 SOURCES += \
     main.cpp \
     event.cpp \
-    sqleventmodel.cpp \
     database.cpp \
     categoryquerymodel.cpp \
-    sqlstatsmodel.cpp \
     stats.cpp
 
 RESOURCES += \
@@ -32,8 +30,6 @@ INSTALLS += target
 
 HEADERS += \
     event.h \
-    sqleventmodel.h \
     database.h \
     categoryquerymodel.h \
-    sqlstatsmodel.h \
     stats.h

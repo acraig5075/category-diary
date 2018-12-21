@@ -73,11 +73,10 @@ Component {
                             onClicked: {
                                 var fromDate = Qt.formatDate(fromCalendar.selectedDate, "yyyy-MM-dd");
                                 var toDate = Qt.formatDate(toCalendar.selectedDate, "yyyy-MM-dd");
-                                statsListView.model = statsModel.statsForDateRange(fromDate, toDate);
+                                statsListView.model = database.summaryForDateRange(fromDate, toDate);
                             }
                         }
                     }
-
                 }
 
                 Popup {
