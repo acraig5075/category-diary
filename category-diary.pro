@@ -4,10 +4,10 @@ QT += quick sql
 
 SOURCES += \
     main.cpp \
-    event.cpp \
     database.cpp \
     categoryquerymodel.cpp \
-    stats.cpp
+    stats.cpp \
+    eventsquerymodel.cpp
 
 RESOURCES += \
     category-diary.qrc
@@ -29,7 +29,7 @@ target.path = $$[QT_INSTALL_EXAMPLES]/quickcontrols/extras/category-diary
 INSTALLS += target
 
 HEADERS += \
-    event.h \
     database.h \
     categoryquerymodel.h \
-    stats.h
+    stats.h \
+    eventsquerymodel.h

@@ -13,15 +13,6 @@ Component {
             spacing: 10
             layoutDirection: Qt.RightToLeft
 
-            Connections {
-                target: database
-                onDatabaseChanged: {
-                    calendar.update()
-                    eventsListView.update()
-                    console.info("Database changed")
-                }
-            }
-
             Calendar {
                 id: calendar
                 width: (parent.width > parent.height ? parent.width * 0.5 - parent.spacing : parent.width)
@@ -30,6 +21,11 @@ Component {
                 weekNumbersVisible: true
                 selectedDate: new Date()
                 focus: true
+
+                onClicked: {
+                    // handler for click(date)
+                    eventsModel.date = date
+                }
 
                 style: Flat.CalendarStyle {
                     dayDelegate: Item {
@@ -48,7 +44,7 @@ Component {
 
                         Image {
                             id: dayDelegateImage
-                            visible: styleData.visibleMonth && database.eventsForDate(styleData.date).length > 0
+                            visible: styleData.visibleMonth && database.eventsForDate(styleData.date) > 0
                             anchors.top: parent.top
                             anchors.left: parent.left
                             anchors.margins: -1
@@ -121,7 +117,7 @@ Component {
                     header: eventListHeader
                     anchors.fill: parent
                     anchors.margins: 10
-                    model: database.eventsForDate(calendar.selectedDate)
+                    model: eventsModel
 
                     delegate: Rectangle {
                         width: eventsListView.width
@@ -153,14 +149,14 @@ Component {
                                 id: nameLabel
                                 width: parent.width
                                 wrapMode: Text.Wrap
-                                text: modelData.name
+                                text: model.name
                                 font.pointSize: 12
                             }
                             Label {
                                 id: timeLabel
                                 width: parent.width
                                 wrapMode: Text.Wrap
-                                text: modelData.percent + "%"
+                                text: model.percent + "%"
                                 color: "#aaa"
                                 font.pointSize: 10
                             }
@@ -192,9 +188,10 @@ Component {
 
                         onAccepted: {
                             var categoryId = categoryModel.getId(categoryCombo.currentIndex)
-                            console.log(qsTr("row: %1, id: %2").arg(categoryCombo.currentIndex).arg(categoryId))
                             var selectedDate = calendar.selectedDate
+
                             if (database.addEvent(selectedDate, categoryId)) {
+                                eventsModel.date = selectedDate;
                             }
                         }
 

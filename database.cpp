@@ -5,7 +5,6 @@
 #include <QStandardPaths>
 #include <QDate>
 #include "database.h"
-#include "event.h"
 #include "stats.h"
 
 Database::Database(QObject *parent)
@@ -162,37 +161,27 @@ bool Database::addEvent(const QDateTime &date, int categoryId)
         return false;
     }
 
-    emit databaseChanged();
-
     return true;
 }
 
-QList<QObject*> Database::eventsForDate(const QDate &date)
+int Database::eventsForDate(const QDate &date)
 {
     const QString queryStr = QString::fromLatin1(
-                "SELECT Events.myDate AS myDate, Events.percentage AS percent, Categories.description AS name "
+                "SELECT COUNT(1) AS count "
                 "FROM Events "
-                "INNER JOIN Categories ON Events.categoryId = Categories.id "
                 "WHERE '%1' >= myDate AND '%1' <= myDate").arg(date.toString("yyyy-MM-dd"));
 
     QSqlQuery query(queryStr);
     if (!query.exec())
         qFatal("Query failed");
 
-    QList<QObject*> events;
-    while (query.next()) {
-        Event *event = new Event(this);
-
-        QDateTime date;
-        date.setDate(query.value("myDate").toDate());
-        event->setDate(date);
-        event->setPercent(query.value("percent").toInt());
-        event->setName(query.value("name").toString());
-
-        events.append(event);
+    int count = 0;
+    if (query.next())
+    {
+        count = query.value("count").toInt();
     }
 
-    return events;
+    return count;
 }
 
 QList<QObject*> Database::summaryForDateRange(const QDate &fromDate, const QDate &toDate)
