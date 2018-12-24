@@ -109,8 +109,7 @@ Component {
             }
         }
 
-        Button
-        {
+        Button {
             id: addCatButton
             text: "Add"
             anchors.bottom: parent.bottom
@@ -118,39 +117,15 @@ Component {
             anchors.margins: 10
             anchors.horizontalCenter: parent.horizontalCenter
 
-            onClicked: inputDialog.open()
+            onClicked: addCatDialog.open()
+        }
 
-            Dialog {
-                id: inputDialog
-                x: (parent.width - width) / 2
-                y: (parent.height - height) / 2
-                parent: Overlay.overlay
+        AddCategoryDialog {
+            id: addCatDialog
 
-                focus: true
-                modal: true
-                title: "Input"
-                standardButtons: Dialog.Ok | Dialog.Cancel
-
-                onAccepted: {
-                    database.addCategory(nameField.text)
-                    categoryModel.update()
-                }
-
-                ColumnLayout {
-                    spacing: 20
-                    anchors.fill: parent
-                    Label {
-                        elide: Label.ElideRight
-                        text: "Name:"
-                        Layout.fillWidth: true
-                    }
-                    TextField {
-                        id: nameField
-                        focus: true
-                        placeholderText: "New category name"
-                        Layout.fillWidth: true
-                    }
-                }
+            onFinished: {
+                database.addCategory(name)
+                categoryModel.update()
             }
         }
     }

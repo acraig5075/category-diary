@@ -9,14 +9,13 @@ Dialog {
 
     focus: true
     modal: true
-    title: "Add Event"
+    title: "Add Category"
     standardButtons: Dialog.Ok | Dialog.Cancel
 
-    signal  finished(int categoryId)
+    signal finished(string name)
 
     onAccepted: {
-        var categoryId = categoryModel.getId(categoryCombo.currentIndex)
-        finished(categoryId)
+        finished(nameField.text)
     }
 
     ColumnLayout {
@@ -24,16 +23,14 @@ Dialog {
         anchors.fill: parent
         Label {
             elide: Label.ElideRight
-            text: "Category:"
+            text: "Name:"
             Layout.fillWidth: true
         }
-        ComboBox {
-            id: categoryCombo
+        TextField {
+            id: nameField
             focus: true
+            placeholderText: "New category name"
             Layout.fillWidth: true
-            model: categoryModel
-            textRole: "name"
         }
     }
 }
-

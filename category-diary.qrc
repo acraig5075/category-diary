@@ -9,5 +9,6 @@
         <file>Summary.qml</file>
         <file>RenameDialog.qml</file>
         <file>AddEventDialog.qml</file>
+        <file>AddCategoryDialog.qml</file>
     </qresource>
 </RCC>
