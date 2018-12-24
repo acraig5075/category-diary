@@ -9,11 +9,7 @@ Component {
         ListView {
             id: categoryView
             width: parent.width
-            //anchors.fill: parent
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: addCatButton.top
+            anchors.fill: parent
             anchors.margins: 10
             clip: true
             currentIndex: 0
@@ -109,14 +105,16 @@ Component {
             }
         }
 
-        Button {
+        RoundButton {
             id: addCatButton
-            text: "Add"
-            anchors.bottom: parent.bottom
-            height:  48 * Flat.FlatStyle.scaleFactor
+            text: qsTr("+")
+            highlighted: true
+            height: 64
+            width: 64
+            radius: 32
             anchors.margins: 10
-            anchors.horizontalCenter: parent.horizontalCenter
-
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
             onClicked: addCatDialog.open()
         }
 

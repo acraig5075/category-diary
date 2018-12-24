@@ -1,4 +1,3 @@
-Round add buttons for category and diary pages
 Delete an event from diary page
 Delete a category (if unused)
 Sort the order of categories in CategoryQueryModel by usage
@@ -6,4 +5,3 @@ Cleanup options page
 Summary page optionally list view or chart view
 Create the database directory if not existing
 Give header to summary listview
-Extract the add category dialog into own .qml

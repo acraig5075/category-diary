@@ -7,8 +7,8 @@ import QtQuick.Extras.Private 1.0
 
 ApplicationWindow {
     id: window
-    width: 480
-    height: 860
+    width: 400
+    height: 640
     title: "Flat Example"
     visible: true
 
