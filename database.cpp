@@ -103,8 +103,8 @@ bool Database::removeCategory(int id)
 bool Database::renameCategory(int id, const QString &name)
 {
     QSqlQuery query;
-    query.prepare("UPDATE Categories SET description = :Name WHERE id = :Id");
-    query.bindValue(":Name", name);
+	query.prepare("UPDATE Categories SET description = :Name WHERE id = :Id");
+	query.bindValue(":Name", name);
     query.bindValue(":Id", id);
 
     return query.exec();

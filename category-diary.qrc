@@ -7,5 +7,6 @@
         <file>Categories.qml</file>
         <file>Diary.qml</file>
         <file>Summary.qml</file>
+        <file>RenameDialog.qml</file>
     </qresource>
 </RCC>

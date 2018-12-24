@@ -20,6 +20,7 @@ public:
 public slots:
     void update();
     int getId(int row);
+	QString getName(int row);
 };
 
 #endif // CATEGORYQUERYMODEL_H

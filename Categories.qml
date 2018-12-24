@@ -1,4 +1,4 @@
-import QtQuick 2.6
+﻿import QtQuick 2.6
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles.Flat 1.0 as Flat
@@ -26,6 +26,12 @@ Component {
                 onClicked: {
                     categoryView.currentIndex = index
                 }
+                onPressAndHold: {
+                    var pos = mapToItem(categoryView, 0, height)
+                    contextMenu.x = pos.x
+                    contextMenu.y = pos.y
+                    contextMenu.open()
+                }
 
                 Rectangle {
                     width: parent.width
@@ -43,6 +49,39 @@ Component {
                     anchors.left: parent.left
                     anchors.leftMargin: menuMargins
                     anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+
+            Menu {
+                id: contextMenu
+                Label {
+                    padding: 10
+                    font.bold: true
+                    width: parent.width
+                    horizontalAlignment: Qt.AlignHCenter
+                    text: "Menu"
+                }
+                MenuItem {
+                    text: "Rename..."
+                    onTriggered: {
+                        var oldName = categoryModel.getName(categoryView.currentIndex);
+                        renameDialog.renameCategory(oldName)
+                    }
+                }
+                MenuItem {
+                    text: "Delete..."
+                }
+            }
+
+            RenameDialog {
+                id: renameDialog
+
+                onFinished: { // handler for finished(string newName)
+                    var id = categoryModel.getId(categoryView.currentIndex);
+                    console.log("id = ", id, "newName = ", newName)
+                    database.renameCategory(id, newName)
+                    categoryModel.update()
                 }
             }
 
@@ -93,8 +132,6 @@ Component {
                 standardButtons: Dialog.Ok | Dialog.Cancel
 
                 onAccepted: {
-                    console.log("Current index is " + categoryView.currentIndex)
-                    console.log("Corresponding table Id is " + categoryModel.data(categoryView.currentIndex, "id"))
                     database.addCategory(nameField.text)
                     categoryModel.update()
                 }

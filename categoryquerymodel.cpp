@@ -18,6 +18,11 @@ int CategoryQueryModel::getId(int row)
     return this->data(this->index(row, 0), IdRole).toInt();
 }
 
+QString CategoryQueryModel::getName(int row)
+{
+	return this->data(this->index(row, 0), NameRole).toString();
+}
+
 QHash<int, QByteArray> CategoryQueryModel::roleNames() const
 {
    QHash<int, QByteArray> roles;
