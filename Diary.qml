@@ -173,44 +173,17 @@ Component {
                     anchors.margins: 10
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    onClicked: inputDialog.open()
+                    onClicked: addEventDialog.open()
+                }
+            }
 
-                    Dialog {
-                        id: inputDialog
-                        x: (parent.width - width) / 2
-                        y: (parent.height - height) / 2
-                        parent: Overlay.overlay
+            AddEventDialog {
+                id: addEventDialog
 
-                        focus: true
-                        modal: true
-                        title: "Input"
-                        standardButtons: Dialog.Ok | Dialog.Cancel
-
-                        onAccepted: {
-                            var categoryId = categoryModel.getId(categoryCombo.currentIndex)
-                            var selectedDate = calendar.selectedDate
-
-                            if (database.addEvent(selectedDate, categoryId)) {
-                                eventsModel.date = selectedDate;
-                            }
-                        }
-
-                        ColumnLayout {
-                            spacing: 20
-                            anchors.fill: parent
-                            Label {
-                                elide: Label.ElideRight
-                                text: "Category:"
-                                Layout.fillWidth: true
-                            }
-                            ComboBox {
-                                id: categoryCombo
-                                focus: true
-                                Layout.fillWidth: true
-                                model: categoryModel
-                                textRole: "name"
-                            }
-                        }
+                onFinished: {
+                    var selectedDate = calendar.selectedDate
+                    if (database.addEvent(selectedDate, categoryId)) {
+                        eventsModel.date = selectedDate
                     }
                 }
             }

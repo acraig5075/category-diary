@@ -8,5 +8,6 @@
         <file>Diary.qml</file>
         <file>Summary.qml</file>
         <file>RenameDialog.qml</file>
+        <file>AddEventDialog.qml</file>
     </qresource>
 </RCC>
