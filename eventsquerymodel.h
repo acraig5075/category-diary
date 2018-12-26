@@ -11,12 +11,12 @@ class EventsQueryModel : public QSqlQueryModel
 
 public:
     const QString QueryFormatStr =
-            "SELECT Events.myDate AS myDate, Events.percentage AS percent, Categories.description AS name "
+			"SELECT Events.myDate AS myDate, Events.percentage AS percent, Categories.description AS name, Events.id "
             "FROM Events "
             "INNER JOIN Categories ON Events.categoryId = Categories.id "
             "WHERE myDate >= '%1' AND myDate <= '%1' ";
 
-    enum Roles { DateRole = Qt::UserRole + 1, PercentRole, NameRole };
+	enum Roles { DateRole = Qt::UserRole + 1, PercentRole, NameRole, IdRole };
 
     EventsQueryModel(QObject *parent = nullptr);
 
@@ -28,7 +28,8 @@ public:
     void setDate(const QDate &date);
 
 public slots:
-    void update();
+	int getId(int row);
+	void update();
 
 private:
     QDate m_date;

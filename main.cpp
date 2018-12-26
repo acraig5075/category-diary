@@ -27,13 +27,11 @@ int main(int argc, char *argv[])
 
     CategoryQueryModel categoryModel;
     EventsQueryModel eventsModel;
-    //SqlStatsModel statsModel;
 
     QQmlApplicationEngine engine;
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("categoryModel", QVariant::fromValue(&categoryModel));
     context->setContextProperty("eventsModel", QVariant::fromValue(&eventsModel));
-    //context->setContextProperty("statsModel", QVariant::fromValue(&statsModel));
     context->setContextProperty("database", QVariant::fromValue(&database));
     engine.load(QUrl("qrc:/main.qml"));
     if (engine.rootObjects().isEmpty())

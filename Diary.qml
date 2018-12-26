@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles.Flat 1.0 as Flat
 import QtQuick.Controls 2.4
+import QtQuick.Dialogs 1.2
 
 Component {
     Item {
@@ -23,8 +24,8 @@ Component {
                 focus: true
 
                 onClicked: {
-                    // handler for click(date)
                     eventsModel.date = date
+                    eventsListView.currentIndex = -1
                 }
 
                 style: Flat.CalendarStyle {
@@ -66,7 +67,6 @@ Component {
                                         color = selectedDateTextColor;
                                     }
                                 }
-                                color;
                             }
                         }
                     }
@@ -117,12 +117,17 @@ Component {
                     header: eventListHeader
                     anchors.fill: parent
                     anchors.margins: 10
+                    currentIndex: -1
                     model: eventsModel
 
-                    delegate: Rectangle {
+                    delegate: MouseArea {
+                        id: delegateItem
                         width: eventsListView.width
                         height: eventItemColumn.height
                         anchors.horizontalCenter: parent.horizontalCenter
+                        onClicked: {
+                            eventsListView.currentIndex = index
+                        }
 
                         Image {
                             anchors.top: parent.top
@@ -151,6 +156,7 @@ Component {
                                 wrapMode: Text.Wrap
                                 text: model.name
                                 font.pointSize: 12
+                                color: delegateItem.ListView.isCurrentItem ? Flat.FlatStyle.styleColor : Flat.FlatStyle.defaultTextColor
                             }
                             Label {
                                 id: timeLabel
@@ -160,6 +166,13 @@ Component {
                                 color: "#aaa"
                                 font.pointSize: 10
                             }
+                        }
+
+                        onPressAndHold: {
+                            var pos = mapToItem(eventsListView, 0, height)
+                            contextMenu.x = pos.x
+                            contextMenu.y = pos.y
+                            contextMenu.open()
                         }
                     }
                 }
@@ -177,6 +190,24 @@ Component {
                     anchors.bottom: parent.bottom
                     onClicked: addEventDialog.open()
                 }
+
+            }
+
+            Menu {
+                id: contextMenu
+                Label {
+                    padding: 10
+                    font.bold: true
+                    width: parent.width
+                    horizontalAlignment: Qt.AlignHCenter
+                    text: "Menu"
+                }
+                MenuItem {
+                    text: "Delete..."
+                    onTriggered: {
+                        confirmMessage.open()
+                    }
+                }
             }
 
             AddEventDialog {
@@ -187,6 +218,18 @@ Component {
                     if (database.addEvent(selectedDate, categoryId)) {
                         eventsModel.date = selectedDate
                     }
+                }
+            }
+
+            MessageDialog {
+                id: confirmMessage
+                title: "Confirm"
+                text: "Are you sure you want to delete this diary event?"
+                standardButtons: StandardButton.Yes | StandardButton.No
+                onYes: {
+                    var id = eventsModel.getId(eventsListView.currentIndex)
+                    database.deleteEvent(id)
+                    eventsModel.update()
                 }
             }
         }

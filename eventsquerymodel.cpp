@@ -21,6 +21,7 @@ QHash<int, QByteArray> EventsQueryModel::roleNames() const
     roles[DateRole] = "date";
     roles[PercentRole] = "percent";
     roles[NameRole] = "name";
+	roles[IdRole] = "id";
     return roles;
 }
 
@@ -49,4 +50,9 @@ void EventsQueryModel::setDate(const QDate &date)
 {
     m_date = date;
     update();
+}
+
+int EventsQueryModel::getId(int row)
+{
+	return this->data(this->index(row, 0), IdRole).toInt();
 }

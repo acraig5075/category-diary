@@ -44,6 +44,7 @@ Dialog {
         TextField {
             id: newNameField
             focus: true
+            text: ""
             placeholderText: "New category name"
             Layout.fillWidth: true
         }
