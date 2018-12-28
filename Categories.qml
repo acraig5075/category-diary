@@ -46,6 +46,18 @@ Component {
                     anchors.leftMargin: menuMargins
                     anchors.verticalCenter: parent.verticalCenter
                 }
+                Label {
+                    text: "(" + model.usage + ")"
+                    font.pixelSize: Math.round(12 * Flat.FlatStyle.scaleFactor)
+                    font.family: Flat.FlatStyle.fontFamily
+                    font.italic: true
+                    renderType: Text.QtRendering
+                    //color: delegateItem.ListView.isCurrentItem ? Flat.FlatStyle.styleColor : Flat.FlatStyle.defaultTextColor
+                    color: "#bbb"
+                    anchors.right: parent.right
+                    anchors.rightMargin: menuMargins
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
 
 
