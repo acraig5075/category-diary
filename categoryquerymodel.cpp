@@ -28,6 +28,7 @@ QHash<int, QByteArray> CategoryQueryModel::roleNames() const
 	QHash<int, QByteArray> roles;
 	roles[IdRole] = "id";
 	roles[NameRole] = "name";
+	roles[UsageRole] = "usage";
 	return roles;
 }
 

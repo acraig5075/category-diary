@@ -37,7 +37,7 @@ Component {
                 }
 
                 Label {
-                    text: model.name // was model.display
+                    text: model.name
                     font.pixelSize: Math.round(15 * Flat.FlatStyle.scaleFactor)
                     font.family: Flat.FlatStyle.fontFamily
                     renderType: Text.QtRendering

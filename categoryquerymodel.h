@@ -7,9 +7,17 @@ class CategoryQueryModel : public QSqlQueryModel
 {
 	Q_OBJECT
 public:
-	const QString QueryStr = "SELECT id, description FROM Categories";
+	const QString QueryStr =
+			"SELECT c.id, c.Description, "
+			"( "
+			"SELECT COUNT(1) "
+			"FROM Events AS e "
+			"WHERE e.CategoryId = c.id "
+			") AS usage "
+			"FROM Categories AS c "
+			"ORDER BY usage DESC ";
 
-	enum Roles { IdRole = Qt::UserRole + 1, NameRole };
+	enum Roles { IdRole = Qt::UserRole + 1, NameRole, UsageRole };
 
 	CategoryQueryModel(QObject *parent = nullptr);
 
