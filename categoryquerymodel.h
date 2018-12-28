@@ -5,21 +5,21 @@
 
 class CategoryQueryModel : public QSqlQueryModel
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    const QString QueryStr = "SELECT id, description FROM Categories";
+	const QString QueryStr = "SELECT id, description FROM Categories";
 
-    enum Roles { IdRole = Qt::UserRole + 1, NameRole };
+	enum Roles { IdRole = Qt::UserRole + 1, NameRole };
 
-    CategoryQueryModel(QObject *parent = nullptr);
+	CategoryQueryModel(QObject *parent = nullptr);
 
-    QHash<int, QByteArray> roleNames() const override;
+	QHash<int, QByteArray> roleNames() const override;
 
-    QVariant data(const QModelIndex &index, int role) const override;
+	QVariant data(const QModelIndex &index, int role) const override;
 
 public slots:
-    void update();
-    int getId(int row);
+	void update();
+	int getId(int row);
 	QString getName(int row);
 };
 
