@@ -1,5 +1,4 @@
 Delete a category (if unused)
-Sort the order of categories in CategoryQueryModel by usage
 Summary page optionally list view or chart view
 Create the database directory if not existing
 Calendar image remains when last event for a day is deleted

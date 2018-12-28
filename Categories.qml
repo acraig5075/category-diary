@@ -52,7 +52,6 @@ Component {
                     font.family: Flat.FlatStyle.fontFamily
                     font.italic: true
                     renderType: Text.QtRendering
-                    //color: delegateItem.ListView.isCurrentItem ? Flat.FlatStyle.styleColor : Flat.FlatStyle.defaultTextColor
                     color: "#bbb"
                     anchors.right: parent.right
                     anchors.rightMargin: menuMargins
@@ -85,7 +84,7 @@ Component {
             RenameDialog {
                 id: renameDialog
 
-                onFinished: { // handler for finished(string newName)
+                onFinished: {
                     var id = categoryModel.getId(categoryView.currentIndex);
                     console.log("id = ", id, "newName = ", newName)
                     database.renameCategory(id, newName)
