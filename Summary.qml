@@ -74,6 +74,7 @@ Component {
                                 var fromDate = Qt.formatDate(fromCalendar.selectedDate, "yyyy-MM-dd");
                                 var toDate = Qt.formatDate(toCalendar.selectedDate, "yyyy-MM-dd");
                                 statsListView.model = database.summaryForDateRange(fromDate, toDate);
+                                statsListView.visible = true
                             }
                         }
                     }
@@ -113,6 +114,28 @@ Component {
                 height: (parent.height > parent.width ? parent.height -topRect.height - parent.spacing : parent.height)
                 border.color: Qt.darker(color, 1.2)
 
+                Component {
+                    id: statsListHeader
+
+                    Column {
+                        width: parent.width
+                        height: headerRow1.height + headerRow2.height
+                        bottomPadding: 10
+
+                        Label {
+                            id: headerRow1
+                            text: "Categories for date range"
+                            font.pointSize: 18
+                        }
+
+                        Label {
+                            id: headerRow2
+                            text: "From " + fromButton.text + " to " + toButton.text
+                            font.pointSize: 12
+                        }
+                    }
+                }
+
                 ListView {
                     id: statsListView
                     width: parent.width
@@ -120,6 +143,8 @@ Component {
                     anchors.fill: bottomRect
                     anchors.margins: 10
                     clip: true
+                    header: statsListHeader
+                    visible: false
 
                     delegate: Rectangle {
                         width: statsListView.width

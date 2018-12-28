@@ -1,7 +1,7 @@
 Delete a category (if unused)
 Sort the order of categories in CategoryQueryModel by usage
-Cleanup options page
 Summary page optionally list view or chart view
 Create the database directory if not existing
-Give header to summary listview
-Calendar image remains whenlast event for a day is deleted
+Calendar image remains when last event for a day is deleted
+Cleanup options page
+Option setting for first day of week

@@ -67,6 +67,7 @@ Component {
                                         color = selectedDateTextColor;
                                     }
                                 }
+                                color;
                             }
                         }
                     }
