@@ -1,8 +1,10 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.1
+import QtQuick.Controls.Styles.Flat 1.0 as Flat
 
 Dialog {
+    width: (parent.height > parent.width ? parent.width * 0.75 : parent.height * 0.75)
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     parent: Overlay.overlay

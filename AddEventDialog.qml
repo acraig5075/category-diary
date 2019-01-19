@@ -3,6 +3,7 @@ import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.1
 
 Dialog {
+    width: (parent.height > parent.width ? parent.width * 0.75 : parent.height * 0.75)
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     parent: Overlay.overlay

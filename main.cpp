@@ -8,7 +8,6 @@
 #include "categoryquerymodel.h"
 #include "eventsquerymodel.h"
 
-
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
