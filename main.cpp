@@ -2,6 +2,7 @@
 #include <QtQml/QQmlApplicationEngine>
 #include <QtGui/QFontDatabase>
 #include <QtQml/QQmlContext>
+#include <QQuickStyle>
 #include <QDebug>
 
 #include "database.h"
@@ -11,14 +12,8 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    if (qgetenv("QT_QUICK_CONTROLS_1_STYLE").isEmpty()) {
-#ifdef QT_STATIC
-        // Need a full path to find the style when built statically
-        qputenv("QT_QUICK_CONTROLS_1_STYLE", ":/ExtrasImports/QtQuick/Controls/Styles/Flat");
-#else
-        qputenv("QT_QUICK_CONTROLS_1_STYLE", "Flat");
-#endif
-    }
+
+    QQuickStyle::setStyle("Universal");
 
     Database database;
     if (!database.connect())

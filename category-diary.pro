@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = category-diary
-QT += quick sql
+QT += quick sql quickcontrols2
 
 SOURCES += \
     main.cpp \
@@ -20,7 +20,10 @@ DISTFILES += \
     SettingsIcon.qml \
     Categories.qml \
     Diary.qml \
-    Summary.qml
+    Summary.qml \
+    AddCategoryDialog.qml \
+    AddEventDialog.qml \
+    RenameDialog.qml
 
 target.path = $$[QT_INSTALL_EXAMPLES]/quickcontrols/extras/category-diary
 INSTALLS += target

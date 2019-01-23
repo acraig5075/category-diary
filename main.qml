@@ -1,9 +1,11 @@
-import QtQuick 2.4
-import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.4
+import QtQuick 2.6
+import QtQuick.Layouts 1.4
+import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles.Flat 1.0 as Flat
-import QtQuick.Extras 1.4
-import QtQuick.Extras.Private 1.0
+//import QtQuick.Extras 1.4
+//import QtQuick.Extras.Private 1.0
+import QtQuick.Controls.Universal 2.4
+
 
 ApplicationWindow {
     id: window
@@ -11,6 +13,11 @@ ApplicationWindow {
     height: 640
     title: "Flat Example"
     visible: true
+
+    Universal.theme: Universal.System
+    Universal.accent: Universal.Cobalt
+//    Universal.foreground: Universal.Brown
+//    Universal.background: Universal.Steel
 
     readonly property bool contentLoaded: contentLoader.item
     readonly property alias anchorItem: controlsMenu
@@ -200,10 +207,10 @@ ApplicationWindow {
                 width: parent.width
                 height: 54 * Flat.FlatStyle.scaleFactor
                 z: contentLoader.z + 1
-                style: Flat.ToolBarStyle {
-                    padding.left: 0
-                    padding.right: 0
-                }
+//                style: Flat.ToolBarStyle {
+//                    padding.left: 0
+//                    padding.right: 0
+//                }
 
                 RowLayout {
                     anchors.fill: parent

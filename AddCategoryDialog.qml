@@ -1,7 +1,6 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.1
-import QtQuick.Controls.Styles.Flat 1.0 as Flat
+import QtQuick.Layouts 1.4
 
 Dialog {
     width: (parent.height > parent.width ? parent.width * 0.75 : parent.height * 0.75)
