@@ -4,3 +4,10 @@ Create the database directory if not existing
 Calendar image remains when last event for a day is deleted
 Cleanup options page
 Option setting for first day of week
+
+Try remove Menu.Label.width to solve squeezed context menu on Android
+Try remove Dialog.width to solve standardButtons having no padding
+Try scale RoundButton.width to 10% of parent.width
+See https://stackoverflow.com/a/26005787/1332041 about binary size
+Set https://stackoverflow.com/a/49801910/1332041 about modal dialogs
+See http://doc.qt.io/qtcreator/creator-developing-android.html for deploying to emulator
