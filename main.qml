@@ -4,7 +4,8 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles.Flat 1.0 as Flat
 //import QtQuick.Extras 1.4
 //import QtQuick.Extras.Private 1.0
-import QtQuick.Controls.Universal 2.4
+//import QtQuick.Controls.Universal 2.4
+//import QtQuick.Controls.Material 2.3
 
 
 ApplicationWindow {
@@ -14,10 +15,8 @@ ApplicationWindow {
     title: "Flat Example"
     visible: true
 
-    Universal.theme: Universal.System
-    Universal.accent: Universal.Cobalt
-//    Universal.foreground: Universal.Brown
-//    Universal.background: Universal.Steel
+//    Universal.theme: Universal.System
+//    Universal.accent: Universal.Cobalt
 
     readonly property bool contentLoaded: contentLoader.item
     readonly property alias anchorItem: controlsMenu

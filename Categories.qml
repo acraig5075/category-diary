@@ -22,10 +22,7 @@ Component {
                     categoryView.currentIndex = index
                 }
                 onPressAndHold: {
-                    var pos = mapToItem(categoryView, 0, height)
-                    contextMenu.x = pos.x
-                    contextMenu.y = pos.y
-                    contextMenu.open()
+                    contextMenu.popup()
                 }
 
                 Rectangle {
@@ -61,10 +58,11 @@ Component {
 
             Menu {
                 id: contextMenu
+                font.pixelSize: 15 * Flat.FlatStyle.scaleFactor
+
                 Label {
                     padding: 10
                     font.bold: true
-                    width: parent.width
                     horizontalAlignment: Qt.AlignHCenter
                     text: "Menu"
                 }
@@ -119,9 +117,9 @@ Component {
             id: addCatButton
             text: qsTr("+")
             highlighted: true
-            height: 64
-            width: 64
-            radius: 32
+            height: 64 * Flat.FlatStyle.scaleFactor
+            font.pixelSize: 24 * Flat.FlatStyle.scaleFactor
+            width: height
             anchors.margins: 10
             anchors.right: parent.right
             anchors.bottom: parent.bottom

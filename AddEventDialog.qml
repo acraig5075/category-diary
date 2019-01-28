@@ -1,9 +1,10 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.4
+import QtQuick.Controls.Styles.Flat 1.0 as Flat
 
 Dialog {
-    width: (parent.height > parent.width ? parent.width * 0.75 : parent.height * 0.75)
+    //width: (parent.height > parent.width ? parent.width * 0.75 : parent.height * 0.75)
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     parent: Overlay.overlay
@@ -11,7 +12,9 @@ Dialog {
     focus: true
     modal: true
     title: "Add Event"
+    font.pixelSize: 15 * Flat.FlatStyle.scaleFactor
     standardButtons: Dialog.Ok | Dialog.Cancel
+    closePolicy: Popup.CloseOnEscape
 
     signal  finished(int categoryId)
 

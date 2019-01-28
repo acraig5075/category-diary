@@ -24,51 +24,56 @@ Component {
                     id: layout
 
                     Row {
-                        padding: 10
+                        Column {
+                            padding: 10
 
-                        Label {
-                            text: "From"
-                            font.pixelSize: 15
-                            font.family: Flat.FlatStyle.fontFamily
-                            renderType: Text.QtRendering
-                            color: Flat.FlatStyle.styleColor
+                            Label {
+                                text: "From"
+                                font.pixelSize: 12 * Flat.FlatStyle.scaleFactor
+                                font.family: Flat.FlatStyle.fontFamily
+                                renderType: Text.QtRendering
+                                color: Flat.FlatStyle.styleColor
+                            }
+                            Button {
+                                id: fromButton
+                                text: fromButton.text=Qt.formatDate(fromCalendar.selectedDate, "dd-MM-yyyy");
+                                font.pointSize: 12 * Flat.FlatStyle.scaleFactor
+
+                                onClicked: {
+                                    topRect.buttonSource = 1
+                                    calendarPopup.open()
+                                }
+                            }
                         }
-                        Button {
-                            id: fromButton
-                            text: fromButton.text=Qt.formatDate(fromCalendar.selectedDate, "dd-MM-yyyy");
-                            onClicked: {
-                                topRect.buttonSource = 1
-                                calendarPopup.open()
+                        Column {
+                            padding: 10
+
+                            Label {
+                                text: "To"
+                                font.pixelSize: 12 * Flat.FlatStyle.scaleFactor
+                                font.family: Flat.FlatStyle.fontFamily
+                                renderType: Text.QtRendering
+                                color: Flat.FlatStyle.styleColor
+                            }
+                            Button {
+                                id: toButton
+                                text: fromButton.text=Qt.formatDate(toCalendar.selectedDate, "dd-MM-yyyy");
+                                font.pointSize: 12 * Flat.FlatStyle.scaleFactor
+
+                                onClicked: {
+                                    topRect.buttonSource = 2
+                                    calendarPopup.open()
+                                }
                             }
                         }
                     }
                     Row {
                         padding: 10
-                        topPadding: 0
-
-                        Label {
-                            text: "To"
-                            font.pixelSize: 15
-                            font.family: Flat.FlatStyle.fontFamily
-                            renderType: Text.QtRendering
-                            color: Flat.FlatStyle.styleColor
-                        }
-                        Button {
-                            id: toButton
-                            text: fromButton.text=Qt.formatDate(toCalendar.selectedDate, "dd-MM-yyyy");
-                            onClicked: {
-                                topRect.buttonSource = 2
-                                calendarPopup.open()
-                            }
-                        }
-                    }
-                    Row {
-                        padding: 10
-                        topPadding: 0
 
                         Button {
                             id: queryButton
                             text: "Query"
+                            font.pointSize: 12 * Flat.FlatStyle.scaleFactor
 
                             onClicked: {
                                 var fromDate = Qt.formatDate(fromCalendar.selectedDate, "yyyy-MM-dd");
@@ -120,18 +125,19 @@ Component {
                     Column {
                         width: parent.width
                         height: headerRow1.height + headerRow2.height
-                        bottomPadding: 10
 
                         Label {
                             id: headerRow1
                             text: "Categories for date range"
-                            font.pointSize: 18
+                            font.pointSize: 15 * Flat.FlatStyle.scaleFactor
+                            bottomPadding: 5
                         }
 
                         Label {
                             id: headerRow2
                             text: "From " + fromButton.text + " to " + toButton.text
-                            font.pointSize: 12
+                            font.pointSize: 12 * Flat.FlatStyle.scaleFactor
+                            bottomPadding: 10
                         }
                     }
                 }
@@ -169,7 +175,7 @@ Component {
                                 width: parent.width
                                 wrapMode: Text.Wrap
                                 text: modelData.description
-                                font.pointSize: 10
+                                font.pointSize: 10 * Flat.FlatStyle.scaleFactor
                             }
 
                             Label {
@@ -178,7 +184,7 @@ Component {
                                 wrapMode: Text.Wrap
                                 text: (modelData.percent).toFixed(0) + '%'
                                 color: "#aaa"
-                                font.pointSize: 10
+                                font.pointSize: 10 * Flat.FlatStyle.scaleFactor
                                 anchors.right: parent.right
                             }
                         }

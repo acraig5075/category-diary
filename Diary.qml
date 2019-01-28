@@ -49,7 +49,7 @@ Component {
                             anchors.top: parent.top
                             anchors.left: parent.left
                             anchors.margins: -1
-                            width: 12
+                            width: 12 * Flat.FlatStyle.scaleFactor
                             height: width
                             source: "qrc:/images/eventindicator.png"
                         }
@@ -91,7 +91,7 @@ Component {
                         Label {
                             id: eventDayLabel
                             text: calendar.selectedDate.getDate()
-                            font.pointSize: 35
+                            font.pointSize: 35 * Flat.FlatStyle.scaleFactor
                         }
 
                         Column {
@@ -100,12 +100,12 @@ Component {
                             Label {
                                 readonly property var options: { weekday: "long" }
                                 text: Qt.locale().standaloneDayName(calendar.selectedDate.getDay(), Locale.LongFormat)
-                                font.pointSize: 18
+                                font.pointSize: 18 * Flat.FlatStyle.scaleFactor
                             }
                             Label {
                                 text: Qt.locale().standaloneMonthName(calendar.selectedDate.getMonth())
                                       + calendar.selectedDate.toLocaleDateString(Qt.locale(), " yyyy")
-                                font.pointSize: 12
+                                font.pointSize: 12 * Flat.FlatStyle.scaleFactor
                             }
                         }
                     }
@@ -133,7 +133,7 @@ Component {
                         Image {
                             anchors.top: parent.top
                             anchors.topMargin: 4
-                            width: 12
+                            width: 12 * Flat.FlatStyle.scaleFactor
                             height: width
                             source: "qrc:/images/eventindicator.png"
                         }
@@ -156,7 +156,7 @@ Component {
                                 width: parent.width
                                 wrapMode: Text.Wrap
                                 text: model.name
-                                font.pointSize: 12
+                                font.pointSize: 12 * Flat.FlatStyle.scaleFactor
                                 color: delegateItem.ListView.isCurrentItem ? Flat.FlatStyle.styleColor : Flat.FlatStyle.defaultTextColor
                             }
                             Label {
@@ -165,15 +165,12 @@ Component {
                                 wrapMode: Text.Wrap
                                 text: model.percent + "%"
                                 color: "#aaa"
-                                font.pointSize: 10
+                                font.pointSize: 10 * Flat.FlatStyle.scaleFactor
                             }
                         }
 
                         onPressAndHold: {
-                            var pos = mapToItem(eventsListView, 0, height)
-                            contextMenu.x = pos.x
-                            contextMenu.y = pos.y
-                            contextMenu.open()
+                            contextMenu.popup()
                         }
                     }
                 }
@@ -183,9 +180,9 @@ Component {
                     id:addEventButton
                     text: qsTr("+")
                     highlighted: true
-                    height: 64
-                    width: 64
-                    radius: 32
+                    height: 64 * Flat.FlatStyle.scaleFactor
+                    font.pixelSize: 24 * Flat.FlatStyle.scaleFactor
+                    width: height
                     anchors.margins: 10
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
@@ -196,10 +193,11 @@ Component {
 
             Menu {
                 id: contextMenu
+                font.pixelSize: 15 * Flat.FlatStyle.scaleFactor
+
                 Label {
                     padding: 10
                     font.bold: true
-                    width: parent.width
                     horizontalAlignment: Qt.AlignHCenter
                     text: "Menu"
                 }
